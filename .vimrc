@@ -34,6 +34,7 @@ if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
 endif
 
 "colorscheme skittles_berry
-"colorscheme desert256 
+colorscheme desert256 
+"colorscheme mango
 
 
