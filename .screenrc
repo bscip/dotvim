@@ -13,6 +13,11 @@ hardstatus string '%{= kG}%-Lw%{= kW}%50> %n*%f %t%{= kG}%+Lw%< %{= kG}%-=%D %m/
 screen -t shell 0 bash
 screen -t logs 1 bash
 screen -t vim 2 bash
+screen -t scratch 3 bash
+screen -t scratch 4 bash
+screen -t scratch 5 bash
+screen -t bouncy 6 bash
+screen -t server 7 bash
 select 0
 
 bind s
