@@ -20,7 +20,6 @@ set tabstop=4
 set shiftwidth=4
 set ruler           
 set number          " show line number
-set nowrap          " no line wrap
 set incsearch       " incremental search
 set ignorecase      " ignore case when searching
 set smartcase       " ignore case when searching only when search term is all in lowercase
