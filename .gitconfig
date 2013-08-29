@@ -1,0 +1,12 @@
+[user]
+	name = Brian Scipione
+	email = brianscipione@gmail.com
+
+[color]
+	ui = true
+
+[gui]
+	editor = vim
+
+[github]
+	user = bscip
