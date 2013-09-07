@@ -16,7 +16,7 @@ Bundle 'tpope/vim-rails.git'
 Bundle 'godlygeek/tabular'
 Bundle 'pangloss/vim-javascript'
 Bundle 'scrooloose/nerdtree'
-Bundle 'Valloric/YouCompleteMe'
+"Bundle 'Valloric/YouCompleteMe'
 Bundle 'Shougo/unite.vim'
 " vim-scripts repos
 "Bundle 'L9'
