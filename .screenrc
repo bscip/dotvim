@@ -17,8 +17,12 @@ hardstatus alwayslastline
 
 hardstatus string '%{= kG}%-Lw%{= kW}%50> %n*%f %t%{= kG}%+Lw%< %{= kG}%-=%D %m/%d/%y | %C:%s %A | %1`%{-}'
 
-screen -t blah 0 
-screen -t blah2 1
+screen -t oa-server 0 
+screen -t aura-api 1
+screen -t curation-api 2
+screen -t compass 3
+screen -t dev 4
+
 select 0
 
 bind s

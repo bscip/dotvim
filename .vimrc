@@ -18,6 +18,8 @@ Bundle 'tpope/vim-rails.git'
 Bundle 'godlygeek/tabular'
 Bundle 'pangloss/vim-javascript'
 Bundle 'scrooloose/nerdtree'
+Bundle 'nono/vim-handlebars'
+Bundle 'groenewege/vim-less'
 "Bundle 'Valloric/YouCompleteMe'
 "Bundle 'Shougo/unite.vim'
 " vim-scripts repos
@@ -69,13 +71,14 @@ if v:lang =~ "utf8$" || v:lang =~ "UTF-8$"
         set fileencodings=utf-8,latin1
 endif
 
-colorscheme molokai
+" colorscheme molokai
+"colorscheme 256-grayvim
 "colorscheme jelleybeans 
-"colorscheme desertEx 
+"colorscheme solarized 
 "colorscheme desert256 
-"colorscheme mango
+colorscheme mango
 
-autocmd FileType ruby colorscheme badwolf 
-autocmd FileType haml colorscheme badwolf 
-autocmd FileType html colorscheme badwolf 
-autocmd FileType cs colorscheme badwolf 
+"autocmd FileType ruby colorscheme badwolf 
+"autocmd FileType haml colorscheme badwolf 
+"autocmd FileType html colorscheme badwolf 
+"autocmd FileType cs colorscheme badwolf 

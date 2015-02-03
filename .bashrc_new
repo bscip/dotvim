@@ -1,6 +1,9 @@
 
 PATH="/usr/local/bin:/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 
+export ES_HOME=/usr/local/Cellar/elasticsearch/elasticsearch-1.2.2/
+export ES_CLASSPATH=$ES_CLASSPATH:$ES_HOME/lib/elasticsearch-1.2.2.jar:$ES_HOME/lib/*:$ES_HOME/lib/sigar/*
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -63,8 +66,8 @@ esac
 
 # enable color support of ls and also add handy aliases
 #if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
+    #test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls -G'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
@@ -86,19 +89,29 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+# COLOR
+export CLICOLOR=1
+#export LSCOLORS=Gxfxcxdxbxegedabagacad
+export LSCOLORS=Exfxcxdxbxegedabagacad
+
 # User specific aliases and functions
 #alias d="screen -D -RR `screen -ls | grep ached | head -n 1 | gawk '{print $1}'`"
 alias redis-start='redis-server /usr/local/etc/redis.conf'
 alias gs="git status"
 alias gb="git branch"
+alias gom="git pull origin master"
 alias vi="vim"
-alias lss="ls -lart"
+alias lss="ls -Glart"
 alias d="screen -D -RR `screen -ls | grep ached | head -n 1 | gawk '{print $1}'`"
+alias nodescreen="screen -S node -D -RR `screen -ls | grep ached | head -n 1 | gawk '{print $1}'`"
+alias oassh="ssh -i ~/.ssh/openaura-ops.pem ubuntu@deployinator.openaura.net"
+alias oastart="jruby --server -Xcompile.invokedynamic=false -J-Xmx1024m -J-Xms1024m -J-Xmn512m -J-XX:PermSize=256m -S trinidad --threadsafe --config config/trinidad.rb"
+alias oasql="psql -U openaura openaura_development"
 
 
 # node path
-#export NODE_PATH=/usr/local/lib/node_modules:/usr/local/lib/node
-#export PATH=/home/ubuntu/node/bin:$PATH
+export NODE_PATH=/usr/local/lib/node_modules:/usr/local/lib/node:/node_modules/.bin
+export PATH=/home/ubuntu/node/bin:$PATH
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
@@ -111,3 +124,8 @@ fi
 
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+# JRUBY 
+export JRUBY_OPTS="--1.9 -J-XX:MaxPermSize=256m -Xcompile.invokedynamic=false"
+# openssl
+export SSL_CERT_FILE=/usr/local/opt/curl-ca-bundle/share/ca-bundle.crt
