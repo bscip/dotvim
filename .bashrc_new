@@ -129,3 +129,6 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 export JRUBY_OPTS="--1.9 -J-XX:MaxPermSize=256m -Xcompile.invokedynamic=false"
 # openssl
 export SSL_CERT_FILE=/usr/local/opt/curl-ca-bundle/share/ca-bundle.crt
+
+export NVM_DIR="/Users/brian/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

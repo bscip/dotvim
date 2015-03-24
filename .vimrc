@@ -4,18 +4,26 @@ filetype off                   " required!
 call plug#begin('~/.vim/plugged')
 
 Plug 'flazz/vim-colorschemes'
+
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-vinegar'
+
 Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/vim-github-dashboard'
+
+Plug 'christoomey/vim-tmux-navigator'
+
 Plug 'kien/ctrlp.vim'
+Plug 'bling/vim-airline'
+Plug 'mileszs/ack.vim'
 
 Plug 'cakebaker/scss-syntax.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'groenewege/vim-less'
 Plug 'nono/vim-handlebars'
 Plug 'tpope/vim-rails'
+Plug 'elzr/vim-json'
 
 call plug#end()
 
