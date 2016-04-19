@@ -1,7 +1,7 @@
 term "screen-256color"
 # terminfo and termcap for nice 256 color terminal
 # allow bold colors - necessary for some reason
-attrcolor b ".I" 
+#attrcolor b ".I" 
 # tell screen how to set colors. AB = background, AF=foreground 
 termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm' 
 # erase background with current bg color 
@@ -17,12 +17,10 @@ hardstatus alwayslastline
 
 hardstatus string '%{= kG}%-Lw%{= kW}%50> %n*%f %t%{= kG}%+Lw%< %{= kG}%-=%D %m/%d/%y | %C:%s %A | %1`%{-}'
 
-screen -t oa-server 0 
-screen -t aura-api 1
-screen -t curation-api 2
-screen -t compass 3
-screen -t dev 4
+screen -t server 0 
+screen -t proj 1
+screen -t edit 2
 
-select 0
+select 2
 
 bind s

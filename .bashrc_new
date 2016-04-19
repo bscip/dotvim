@@ -1,8 +1,8 @@
 
 PATH="/usr/local/bin:/usr/local/opt/coreutils/libexec/gnubin:$PATH"
 
-export ES_HOME=/usr/local/Cellar/elasticsearch/elasticsearch-1.2.2/
-export ES_CLASSPATH=$ES_CLASSPATH:$ES_HOME/lib/elasticsearch-1.2.2.jar:$ES_HOME/lib/*:$ES_HOME/lib/sigar/*
+#export ES_HOME=/usr/local/Cellar/elasticsearch/elasticsearch-1.2.2/
+#export ES_CLASSPATH=$ES_CLASSPATH:$ES_HOME/lib/elasticsearch-1.2.2.jar:$ES_HOME/lib/*:$ES_HOME/lib/sigar/*
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -27,6 +27,9 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
+# COLOR
+export CLICOLOR=1
+
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color) color_prompt=yes;;
@@ -48,8 +51,72 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+function parse_git_branch {
+  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+  echo "[${ref#refs/heads/}]"
+}
+
+DULL=0
+BRIGHT=1
+
+FG_BLACK=30
+FG_RED=31
+FG_GREEN=32
+FG_YELLOW=33
+FG_BLUE=34
+FG_VIOLET=35
+FG_CYAN=36
+FG_WHITE=37
+
+FG_NULL=00
+
+BG_BLACK=40
+BG_RED=41
+BG_GREEN=42
+BG_YELLOW=43
+BG_BLUE=44
+BG_VIOLET=45
+BG_CYAN=46
+BG_WHITE=47
+
+BG_NULL=00
+
+##
+# ANSI Escape Commands
+##
+ESC="\033"
+NORMAL="\[$ESC[m\]"
+RESET="\[$ESC[${DULL};${FG_WHITE};${BG_NULL}m\]"
+
+##
+# Shortcuts for Colored Text ( Bright and FG Only )
+##
+
+# DULL TEXT
+
+BLACK="\[$ESC[${DULL};${FG_BLACK}m\]"
+RED="\[$ESC[${DULL};${FG_RED}m\]"
+GREEN="\[$ESC[${DULL};${FG_GREEN}m\]"
+YELLOW="\[$ESC[${DULL};${FG_YELLOW}m\]"
+BLUE="\[$ESC[${DULL};${FG_BLUE}m\]"
+VIOLET="\[$ESC[${DULL};${FG_VIOLET}m\]"
+CYAN="\[$ESC[${DULL};${FG_CYAN}m\]"
+WHITE="\[$ESC[${DULL};${FG_WHITE}m\]"
+
+# BRIGHT TEXT
+BRIGHT_BLACK="\[$ESC[${BRIGHT};${FG_BLACK}m\]"
+BRIGHT_RED="\[$ESC[${BRIGHT};${FG_RED}m\]"
+BRIGHT_GREEN="\[$ESC[${BRIGHT};${FG_GREEN}m\]"
+BRIGHT_YELLOW="\[$ESC[${BRIGHT};${FG_YELLOW}m\]"
+BRIGHT_BLUE="\[$ESC[${BRIGHT};${FG_BLUE}m\]"
+BRIGHT_VIOLET="\[$ESC[${BRIGHT};${FG_VIOLET}m\]"
+BRIGHT_CYAN="\[$ESC[${BRIGHT};${FG_CYAN}m\]"
+BRIGHT_WHITE="\[$ESC[${BRIGHT};${FG_WHITE}m\]"
+
+
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\[\033[00m\]:\[\033[01;34m\]\w\[\033[01;33m\] $(parse_git_branch)\[\033[01;35m\]~>\[\033[00m\] '
+  #PS1='${debian_chroot:+($debian_chroot)}$GREEN\u@$WHITE:$BLUE\w$YELLOW $(parse_git_branch)$VIOLET~>$WHITE '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u:\w\$ '
 fi
@@ -58,7 +125,7 @@ unset color_prompt force_color_prompt
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
 xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@: \w\a\]$PS1"
+  PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@: \w\a\]$PS1"
     ;;
 *)
     ;;
@@ -89,29 +156,31 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-# COLOR
-export CLICOLOR=1
 #export LSCOLORS=Gxfxcxdxbxegedabagacad
-export LSCOLORS=Exfxcxdxbxegedabagacad
+#export LSCOLORS=Exfxcxdxbxegedabagacad
 
 # User specific aliases and functions
 #alias d="screen -D -RR `screen -ls | grep ached | head -n 1 | gawk '{print $1}'`"
-alias redis-start='redis-server /usr/local/etc/redis.conf'
+#alias redis-start='redis-server /usr/local/etc/redis.conf'
 alias gs="git status"
 alias gb="git branch"
 alias gom="git pull origin master"
 alias vi="vim"
-alias lss="ls -Glart"
+alias lss="ls -Glarth"
 alias d="screen -D -RR `screen -ls | grep ached | head -n 1 | gawk '{print $1}'`"
 alias nodescreen="screen -S node -D -RR `screen -ls | grep ached | head -n 1 | gawk '{print $1}'`"
-alias oassh="ssh -i ~/.ssh/openaura-ops.pem ubuntu@deployinator.openaura.net"
-alias oastart="jruby --server -Xcompile.invokedynamic=false -J-Xmx1024m -J-Xms1024m -J-Xmn512m -J-XX:PermSize=256m -S trinidad --threadsafe --config config/trinidad.rb"
-alias oasql="psql -U openaura openaura_development"
+alias tmuxnew="tmux -new -s bps"
+alias tmuxa="tmux attach -t bps"
+#alias oassh="ssh -i ~/.ssh/openaura-ops.pem ubuntu@deployinator.openaura.net"
+#alias oastart="jruby --server -Xcompile.invokedynamic=false -J-Xmx1024m -J-Xms1024m -J-Xmn512m -J-XX:PermSize=256m -S trinidad --threadsafe --config config/trinidad.rb"
+#alias oasql="psql -U openaura openaura_development"
 
+alias startmongo="mongod --config /usr/local/etc/mongod.conf --fork"
+alias killmemcached='ps aux | grep memcache | grep -v grep | awk '\''{ print $2 }'\'' | xargs kill -9'
 
 # node path
 export NODE_PATH=/usr/local/lib/node_modules:/usr/local/lib/node:/node_modules/.bin
-export PATH=/home/ubuntu/node/bin:$PATH
+#export PATH=/home/ubuntu/node/bin:$PATH
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
@@ -126,9 +195,9 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 # JRUBY 
-export JRUBY_OPTS="--1.9 -J-XX:MaxPermSize=256m -Xcompile.invokedynamic=false"
+#export JRUBY_OPTS="--1.9 -J-XX:MaxPermSize=256m -Xcompile.invokedynamic=false"
 # openssl
-export SSL_CERT_FILE=/usr/local/opt/curl-ca-bundle/share/ca-bundle.crt
+#export SSL_CERT_FILE=/usr/local/opt/curl-ca-bundle/share/ca-bundle.crt
 
 export NVM_DIR="/Users/brian/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
